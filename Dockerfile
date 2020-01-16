@@ -1,4 +1,4 @@
-FROM alpine:3.9.3
+FROM alpine:latest
 
 # Build-time metadata as defined at http://label-schema.org
 ARG BUILD_DATE
@@ -16,12 +16,9 @@ LABEL org.label-schema.vendor="tmknom" \
       org.label-schema.docker.cmd="docker run --rm -v \$PWD:/work $REPO_NAME --parser=markdown --write '**/*.md'" \
       org.label-schema.schema-version="1.0"
 
-ARG NODEJS_VERSION=10.14.2-r0
-ARG MODULE_VERSION=1.17.0
-
 RUN set -x && \
-    apk add --no-cache nodejs=${NODEJS_VERSION} nodejs-npm=${NODEJS_VERSION} && \
-    npm install -g prettier@${MODULE_VERSION} && \
+    apk add --no-cache nodejs nodejs-npm && \
+    npm install -g prettier && \
     npm cache clean --force && \
     apk del nodejs-npm
 
